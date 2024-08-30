@@ -1,11 +1,30 @@
+import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from '@/firebase.js'; 
+import { auth, db } from '@/firebase.js'; 
+import { collection, getDocs } from "firebase/firestore";
 import SignInComponent from '@/components/SignInComponent'
-import Head from "next/head";
 
 export default function Home() {
   // home page
   const [user, loading, error] = useAuthState(auth);
+  const [allQuests, setAllQuests] = useState(null);
+  const [questsLoading, setQuestsLoading] = useState(true);
+
+
+  useEffect(() => {
+    const getAllSurveys = async () => {
+      setQuestsLoading(true);
+      const allSurveys = await getDocs(collection(db, "surveys"));
+      // console.log(allSurveys);
+      allSurveys.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data()}`);
+      });
+      setAllQuests(allSurveys.docs);
+      setQuestsLoading(false);
+    }
+    getAllSurveys();
+  }, []);
+  
   
   if (loading) {
     return (
@@ -15,6 +34,14 @@ export default function Home() {
     )
   }
 
+  if (questsLoading) {
+    return (
+        <div className="flex justify-center items-center h-screen">
+            <span className="loading loading-infinity loading-lg"></span>
+        </div>
+    );
+  }
+  
   if (error) {
     return (
       <div>Error: {error.message}</div>
@@ -31,6 +58,12 @@ export default function Home() {
           <h1>Welcome, {user.displayName}!</h1>
           <p>Your email: {user.email}</p>
           <p>Your UID: {user.uid}</p>
+          
+          {allQuests && (
+            <p>We have {allQuests.length} quests</p>
+          )}
+
+
 
 
           
