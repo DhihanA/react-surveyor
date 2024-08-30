@@ -74,6 +74,9 @@ export default function Navbar() {
                     <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                         <Link href='/' className="btn btn-ghost text-sm" onClick={handleClick}>{user ? "Home" : "Sign In"}</Link>
                         <Link href='/info' className="btn btn-ghost text-sm" onClick={handleClick}>What Is This?</Link>
+                        {user ? (
+                          <Link href='/quest' className="btn btn-ghost text-sm" onClick={handleClick}>Create Survey</Link>
+                        ) : undefined}
                     </ul>
                 </div>
               )}
@@ -85,6 +88,7 @@ export default function Navbar() {
                 <ul className="menu menu-horizontal px-1">
                     <Link href='/' className="btn btn-ghost text-xl">{user ? "Home" : "Sign In"}</Link>
                     <Link href='/info' className="btn btn-ghost text-xl">What Is This?</Link>
+                    <Link href='/quest' className="btn btn-ghost text-xl">Create Quest</Link>
                 </ul>
             </div>
 

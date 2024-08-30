@@ -29,6 +29,8 @@ export default function Home() {
         <div>
           <h1>Welcome, {user.displayName}!</h1>
           <p>Your email: {user.email}</p>
+          <p>Your UID: {user.uid}</p>
+          
         </div>
         ) : (
           // need to let them sign in here
