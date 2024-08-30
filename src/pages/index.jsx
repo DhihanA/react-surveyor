@@ -1,6 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from '@/firebase.js'; 
 import SignInComponent from '@/components/SignInComponent'
+import Head from "next/head";
 
 export default function Home() {
   // home page
@@ -30,6 +31,8 @@ export default function Home() {
           <h1>Welcome, {user.displayName}!</h1>
           <p>Your email: {user.email}</p>
           <p>Your UID: {user.uid}</p>
+
+
           
         </div>
         ) : (
