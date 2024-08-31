@@ -67,6 +67,7 @@ export default function Quest() {
                 'option3': 0,
                 'option4': 0
             },
+            'responders': [],
             'createdBy': user.uid,
             'createdAt': currDate,
             'expiresAt': new Date(currDate.getTime() + 60 * 60 * 1000)

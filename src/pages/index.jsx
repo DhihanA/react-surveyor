@@ -16,14 +16,25 @@ export default function Home() {
       setQuestsLoading(true);
       const allSurveys = await getDocs(collection(db, "surveys"));
       // console.log(allSurveys);
-      allSurveys.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data()}`);
-      });
+      // allSurveys.forEach((doc) => {
+      //   console.log(`${doc.id} => ${doc.data()}`);
+      // });
       setAllQuests(allSurveys.docs);
+      // console.log(allSurveys.docs)
       setQuestsLoading(false);
     }
     getAllSurveys();
   }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log('Question:', question);
+    // console.log('Options:', options);
+
+    console.log('ok finished one');
+
+    
+};
   
   
   if (loading) {
@@ -41,7 +52,7 @@ export default function Home() {
         </div>
     );
   }
-  
+
   if (error) {
     return (
       <div>Error: {error.message}</div>
@@ -50,7 +61,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="p-4">
+      <div className="p-4 text-center">
         {/* <button className="btn btn-primary">Hello daisyUI!</button> */}
         {user ? (
         // can show the users the actual dashboard
@@ -64,10 +75,49 @@ export default function Home() {
           )}
 
 
+        {allQuests && allQuests.map((docSnapshot, index) => {
+          const quest = docSnapshot.data();
+
+          return (
+            <div key={index}>
+              {quest.responders.includes(user.uid) ? (
+                <p>You have already responded to this quest.</p>
+              ) : (
+                <div className="card bg-base-300 shadow-xl my-4">
+                  <form onSubmit={handleSubmit} className="card-body">
+                    <div className="form-control">
+                      <label className="label">
+                        <span className="label-text text-center block w-full text-lg font-bold">{quest.question}</span>
+                      </label>
+
+                      {quest.options.map((opt, optIndex) => (
+                        <div key={optIndex} className="flex items-center mb-3">
+                          <input
+                            type="radio"
+                            name={`quest-${index}`}
+                            value={opt}
+                            className="radio radio-primary mr-2"
+                            required
+                          />
+                          {opt}
+                        </div>
+                      ))}
+                    </div>
+
+                    <button type="submit" className="btn btn-primary mt-4">
+                      Finish Quest
+                    </button>
+                  </form>
+                </div>
+              )}
+            </div>
+          );
+        })}
+
 
 
           
-        </div>
+      </div>
         ) : (
           // need to let them sign in here
           <div>
