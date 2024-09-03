@@ -50,9 +50,9 @@ export default function Quest() {
         setQuestsLoading(true);
         const allSurveys = await getDocs(collection(db, "surveys"));
         // console.log(allSurveys);
-        allSurveys.forEach((doc) => {
-          console.log(`${doc.id} => ${doc.data()}`);
-        });
+        // allSurveys.forEach((doc) => {
+        //   console.log(`${doc.id} => ${doc.data()}`);
+        // });
         setAllQuests(allSurveys.docs);
         setQuestsLoading(false);
       }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '@/firebase.js'; 
-import { collection, getDocs, doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { collection, getDoc, getDocs, doc, updateDoc, arrayUnion, increment } from "firebase/firestore";
 import SignInComponent from '@/components/SignInComponent'
 // import { useRouter } from "next/router";
 
@@ -10,6 +10,7 @@ export default function Home() {
   const [user, loading, error] = useAuthState(auth);
   const [allQuests, setAllQuests] = useState(null); // all the quests currently up
   const [questsLoading, setQuestsLoading] = useState(true); // loading state for when im fetching the quests from firestore
+  const [selectedOptions, setSelectedOptions] = useState({});
 
   // getting all the surveys and updating the state in this
   useEffect(() => {
@@ -27,16 +28,30 @@ export default function Home() {
     getAllSurveys();
   }, []);
 
+  // honestly wish i knew what was happening here
+  const handleOptionChange = (questId, optIndex) => {
+    setSelectedOptions(prev => ({
+      ...prev,
+      [questId]: optIndex
+    }));
+  };
+
   // add the user ID to the submitted quest's responders array on submit
   const handleSubmit = async (e, questId) => {
     e.preventDefault();
     console.log('ok finished one');
 
+    const options = ['option1', 'option2', 'option3', 'option4'];
+    const optIndex = selectedOptions[questId]; // getting the optIndex of the quest they submitted. using questId to get the optIndex for the specific quest they did
+    const selectedOption = options[optIndex]; // mapping the option index to the appropriate anxwer that they submitted
+
     try {
       let questRef = doc(db, 'surveys', questId); // getting the doc reference
       // updates doc
       await updateDoc(questRef, {
-        responders: arrayUnion(user.uid) // adds the string user.uid to the responders array without creating a new array
+        responders: arrayUnion(user.uid), // adds the string user.uid to the responders array without creating a new array
+
+        [`responses.${selectedOption}`]: increment(1) // incrementing the selected option by 1
       });
 
       console.log('successfully added user.uid to responders')
@@ -94,7 +109,9 @@ export default function Home() {
               <div key={index}>
                 {/* check here to see if the current user has already responded to this quest or not */}
                 {quest.responders.includes(user.uid) ? (
-                  <p>You have already responded to this quest.</p>
+                  <div className="card bg-base-300 shadow-xl my-4">
+                    <p>You have already responded to this quest.</p>
+                  </div>
 
                 ) : (
                   // form stuff here. on submit, im sending the questId so that I can later use it to reference the now 
@@ -114,6 +131,7 @@ export default function Home() {
                               type="radio"
                               name={`quest-${index}`}
                               value={opt}
+                              onChange={() => handleOptionChange(questId, optIndex)}
                               className="radio radio-primary mr-2"
                               required
                             />
