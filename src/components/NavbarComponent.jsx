@@ -88,7 +88,9 @@ export default function Navbar() {
                 <ul className="menu menu-horizontal px-1">
                     <Link href='/' className="btn btn-ghost text-xl">{user ? "Home" : "Sign In"}</Link>
                     <Link href='/info' className="btn btn-ghost text-xl">What Is This?</Link>
-                    <Link href='/quest' className="btn btn-ghost text-xl">Create Quest</Link>
+                    {user ? (
+                      <Link href='/quest' className="btn btn-ghost text-xl">Create Quest</Link>
+                    ) : undefined}
                 </ul>
             </div>
 

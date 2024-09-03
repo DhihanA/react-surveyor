@@ -3,6 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '@/firebase.js'; 
 import { collection, getDocs, doc, updateDoc, arrayUnion } from "firebase/firestore";
 import SignInComponent from '@/components/SignInComponent'
+// import { useRouter } from "next/router";
 
 export default function Home() {
   // home page

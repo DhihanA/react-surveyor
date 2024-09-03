@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '@/firebase.js';
 import { addDoc, collection, getDocs } from "firebase/firestore"; // gonna use this to add the doc to the collection soon
@@ -13,6 +14,14 @@ export default function Quest() {
     const [options, setOptions] = useState(['', '', '', '']);
     const [allQuests, setAllQuests] = useState(null);
     const [questsLoading, setQuestsLoading] = useState(true);
+    const router = useRouter();
+
+    // protects this route from non-authenticated users
+    useEffect(() => {
+      if (!loading && !user) {
+        router.replace('/');
+      }
+    }, [user, loading, router]);
   
     const handleOptionChange = (index, value) => {
         const newOptions = [...options];
