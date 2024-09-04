@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from '@/firebase.js'; 
-import SignOutComponent from '@/components/SignOutComponent'
+import SignOutComponent from '@/components/SignOutComponent';
+import SignInComponent from '@/components/SignInComponent';
 
 export default function Navbar() {
     const [user, loading, error] = useAuthState(auth);
@@ -99,9 +100,7 @@ export default function Navbar() {
                 {user ? (
                     <SignOutComponent />
                 ) : (
-                    <div className="invisible">
-                        <button className="btn btn-ghost">Placeholder</button>
-                    </div>
+                    <SignInComponent />
                 )}
             </div>
 

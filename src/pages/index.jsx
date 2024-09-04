@@ -3,6 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '@/firebase.js'; 
 import { collection, getDoc, getDocs, doc, updateDoc, arrayUnion, increment } from "firebase/firestore";
 import SignInComponent from '@/components/SignInComponent'
+import { useRouter } from "next/router";
 // import { useRouter } from "next/router";
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
   const [allQuests, setAllQuests] = useState(null); // all the quests currently up
   const [questsLoading, setQuestsLoading] = useState(true); // loading state for when im fetching the quests from firestore
   const [selectedOptions, setSelectedOptions] = useState({});
+  const router = useRouter();
 
   // getting all the surveys and updating the state in this
   useEffect(() => {
@@ -58,6 +60,7 @@ export default function Home() {
     } catch (err) {
       console.error(`Error updating doc: ${err}`);
     }
+    router.reload();
 };
   
   
@@ -110,7 +113,28 @@ export default function Home() {
                 {/* check here to see if the current user has already responded to this quest or not */}
                 {quest.responders.includes(user.uid) ? (
                   <div className="card bg-base-300 shadow-xl my-4">
-                    <p>You have already responded to this quest.</p>
+                    <div className="card-body">
+                      <label className="label">
+                        <span className="label-text text-center block w-full text-lg font-bold">Quest Results -{'>'} {quest.question}</span>
+                      </label> 
+
+                      {quest.options.map((opt, optIndex) => {
+                          const numResponders = quest.responders.length; // total number of users who responded atm
+                          const responseCount = quest.responses[`option${optIndex + 1}`] || 0; // count of users for the curr option
+                          const percentage = numResponders > 0 ? (responseCount / numResponders) * 100 : 0; // calculating percentage
+
+                          return (
+                            <div key={optIndex} className="my-2">
+                              <div className="flex justify-between mb-1">
+                                <span>{opt}</span>
+                                <span>{responseCount} {responseCount === 1 ? 'user' : 'users'} ({percentage.toFixed(1)}%)</span>
+                              </div>
+                              <progress className="progress progress-success" value={percentage} max="100"></progress>
+                            </div>
+                          );
+                      })}
+
+                    </div>
                   </div>
 
                 ) : (
@@ -149,16 +173,23 @@ export default function Home() {
               </div>
             );
           })}
-
-
-
           
       </div>
         ) : (
-          // need to let them sign in here
+          // the homepage for when you are signed out
           <div>
-            <h1>Please sign in to continue</h1>
-            <SignInComponent />
+
+            <div className="hero min-h-screen">
+              <div className="hero-overlay bg-opacity-60"></div>
+              <div className="hero-content text-center text-neutral-content">
+                <div className="max-w-md">
+                  <h1 className="mb-5 text-5xl font-bold">QuickQuest</h1>
+                  <p className="mb-5 text-lg">Create quick polls and get instant feedback from your audience.</p>
+                  <SignInComponent />
+                </div>
+              </div>
+            </div>
+
           </div>
         )}
       </div>
