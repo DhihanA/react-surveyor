@@ -72,7 +72,7 @@ export default function Navbar() {
                       />
                     </svg>
                   </label>
-                    <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                    <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-50">
                         <Link href='/' className="btn btn-ghost text-sm" onClick={handleClick}>Home</Link>
                         <Link href='/info' className="btn btn-ghost text-sm" onClick={handleClick}>What Is This?</Link>
                         {user ? (
