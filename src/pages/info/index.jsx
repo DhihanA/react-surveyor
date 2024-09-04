@@ -1,7 +1,7 @@
 export default function Info() {
     return (
       <div className="min-h-screen bg-base-200 py-12 px-6">
-        {/* the max-w-5xl determines how spreadout everything is here */}
+        {/* the max-w-#xl determines how spreadout everything is here */}
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-8">What is QuickQuest?</h1>
           <p className="text-lg mb-6">
