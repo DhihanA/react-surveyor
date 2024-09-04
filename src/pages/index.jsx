@@ -47,7 +47,6 @@ export default function Home() {
     const optIndex = selectedOptions[questId]; // getting the optIndex of the quest they submitted. using questId to get the optIndex for the specific quest they did
     const selectedOption = options[optIndex]; // mapping the option index to the appropriate anxwer that they submitted
 
-    // setQuestsLoading(true);
     try {
       let questRef = doc(db, 'surveys', questId); // getting the doc reference
       // updates doc
@@ -61,8 +60,32 @@ export default function Home() {
     } catch (err) {
       console.error(`Error updating doc: ${err}`);
     }
-    // setQuestsLoading(false);
-    router.reload();
+    // router.reload();
+
+    // need to update the allQuests state and modify the quest that was just submitted
+    setAllQuests((prevQuests) => 
+      // iterating over every quest
+      prevQuests.map((docSnapshot) => {
+        // only need to modify the quest that we actually changed currently
+        if (docSnapshot.id === questId) {
+          // Update the quest data with the new response and responder
+          const updatedQuest = {
+            ...docSnapshot.data(),
+            responders: [...docSnapshot.data().responders, user.uid],
+            responses: {
+              ...docSnapshot.data().responses,
+              [selectedOption]: (docSnapshot.data().responses[selectedOption] || 0) + 1,
+            }
+          };
+
+          return {
+            ...docSnapshot,
+            data: () => updatedQuest,
+          };
+        }
+        return docSnapshot;
+      })
+    );
 };
   
   
