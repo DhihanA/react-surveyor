@@ -47,6 +47,7 @@ export default function Home() {
     const optIndex = selectedOptions[questId]; // getting the optIndex of the quest they submitted. using questId to get the optIndex for the specific quest they did
     const selectedOption = options[optIndex]; // mapping the option index to the appropriate anxwer that they submitted
 
+    // setQuestsLoading(true);
     try {
       let questRef = doc(db, 'surveys', questId); // getting the doc reference
       // updates doc
@@ -60,6 +61,7 @@ export default function Home() {
     } catch (err) {
       console.error(`Error updating doc: ${err}`);
     }
+    // setQuestsLoading(false);
     router.reload();
 };
   
@@ -93,13 +95,12 @@ export default function Home() {
         {user ? (
         // can show the users the actual dashboard
         <div>
-          <h1>Welcome, {user.displayName}!</h1>
-          <p>Your email: {user.email}</p>
-          <p>Your UID: {user.uid}</p>
+          <h1 className="mb-5 text-4xl font-bold">Welcome, {user.displayName}!</h1>
           
           {/* have this here temporarily */}
           {allQuests && (
-            <p>We have {allQuests.length} quests</p>
+
+            <p className="mb-6 text-lg font-normal text-slate-500">We have {allQuests.length} quests...</p>
           )}
 
           {/* iterating over all the quests, making a form for each unsubmitted one */}
@@ -140,7 +141,7 @@ export default function Home() {
                 ) : (
                   // form stuff here. on submit, im sending the questId so that I can later use it to reference the now 
                   // submitted form and add the user's ID to the responders array inside it
-                  // TODO: show user resposnes for the submitted form on submission, and make it update seamlessly without requiring a reload
+                  // TODO: make it update seamlessly without requiring a reload
                   // !!!!!
                   <div className="card bg-base-300 shadow-xl my-4">
                     <form onSubmit={(e) => handleSubmit(e, questId)} className="card-body">
@@ -189,6 +190,38 @@ export default function Home() {
                 </div>
               </div>
             </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-8">
+              <div className="feature-card">
+                <i className="fas fa-poll-h text-4xl mb-4"></i>
+                <h3 className="text-2xl font-semibold">Create Polls Instantly</h3>
+                <p>Get your audience's opinion in seconds.</p>
+              </div>
+              <div className="feature-card">
+                <i className="fas fa-users text-4xl mb-4"></i>
+                <h3 className="text-2xl font-semibold">Real-time Results</h3>
+                <p>Watch as the results roll in live.</p>
+              </div>
+              <div className="feature-card">
+                <i className="fas fa-chart-pie text-4xl mb-4"></i>
+                <h3 className="text-2xl font-semibold">Simple & Intuitive</h3>
+                <p>Designed to be easy for everyone.</p>
+              </div>
+            </div>
+
+
+            <footer className="footer p-4 bg-neutral text-neutral-content">
+              <div>
+                <span className="footer-title">QuickQuest</span>
+                <a href="mailto:contactquickquest@gmail.com" className="link link-hover">Email</a>
+              </div>
+              <div>
+                <span className="footer-title">Check Me Out</span>
+                <a href="https://dhihan.com" className="link link-hover" target="_blank">Website</a>
+
+              </div>
+            </footer>
+
 
           </div>
         )}
