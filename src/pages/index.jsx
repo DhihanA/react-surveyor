@@ -130,8 +130,8 @@ export default function Home() {
 
   return (
     <>
+      <NavbarComponent />
       <div className="p-4 text-center">
-        {/* <NavbarComponent /> */}
         {user ? (
           // can show the users the actual dashboard
           <div>
@@ -181,8 +181,6 @@ export default function Home() {
                 ) : (
                   // form stuff here. on submit, im sending the questId so that I can later use it to reference the now 
                   // submitted form and add the user's ID to the responders array inside it
-                  // TODO: make it update seamlessly without requiring a reload
-                  // !!!!!
                   <div className="card bg-base-300 shadow-xl my-4">
                     <form onSubmit={(e) => handleSubmit(e, questId)} className="card-body">
                       <div className="form-control">

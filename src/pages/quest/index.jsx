@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '@/firebase.js';
 import { addDoc, collection, getDocs } from "firebase/firestore"; // gonna use this to add the doc to the collection soon
+import NavbarComponent from '@/components/NavbarComponent';
 
 
 export default function Quest() {
@@ -98,6 +99,8 @@ export default function Quest() {
     }
 
     return (
+      <>
+      <NavbarComponent />
       <div className="p-4 text-center">
         {allQuests && allQuests.length >= 10 ? (
           <div className="flex flex-col items-center justify-center h-screen">
@@ -163,5 +166,6 @@ export default function Quest() {
           </form>
         )}
       </div>
+      </>
     );
 }

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase.js";
+import NavbarComponent from "@/components/NavbarComponent";
 
 export default function Info() {
     // const [user, loading, error] = useAuthState(auth);
@@ -23,6 +24,8 @@ export default function Info() {
     // }
 
     return (
+      <>
+      <NavbarComponent />
       <div className="min-h-screen bg-base-200 py-12 px-6">
         {/* the max-w-#xl determines how spreadout everything is here */}
         <div className="max-w-5xl mx-auto text-center">
@@ -98,6 +101,7 @@ export default function Info() {
           </div>
         </div>
       </div>
+      </>
     );
   }
   
