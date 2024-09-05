@@ -142,11 +142,19 @@ export default function Home() {
           <NavbarComponent />
           <div className="p-4 text-center">
             <h1 className="mb-5 text-4xl font-bold">Welcome, {user.displayName}!</h1>
-            
-            {/* might just keep this here honestly */}
-            {allQuests && (
-              <p className="mb-6 text-lg font-normal text-slate-500">We have {allQuests.length} quests...</p>
+
+            {allQuests && allQuests.length === 0 ? (
+              <div className="card bg-base-200 shadow-xl my-8 p-6 text-center">
+                <h2 className="text-2xl font-semibold mb-4">No Quests Available</h2>
+                <p className="text-lg mb-4">It looks like there are no quests at the moment. Why not create your own?</p>
+                <button className="btn btn-primary" onClick={() => router.push('/quest')}>
+                  Create A Quest
+                </button>
+              </div>
+            ) : (
+              <p className="mb-6 text-lg font-normal text-slate-500">We have {allQuests.length} {allQuests.length === 1 ? 'quest' : 'quests'}...</p>
             )}
+
 
             {/* iterating over all the quests, making a form for each unsubmitted one */}
             {/* for the submitted ones, need to show them the responses to that quest */}
