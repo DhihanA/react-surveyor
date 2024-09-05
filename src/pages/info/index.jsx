@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase.js";
 
 export default function Info() {
-    const [user, loading, error] = useAuthState(auth);
+    // const [user, loading, error] = useAuthState(auth);
     // const router = useRouter();
 
     // // protects this route from non-authenticated users
@@ -14,13 +14,13 @@ export default function Info() {
     //   }
     // }, [user, loading, router]);
 
-    if (loading) {
-      return (
-        <div className="flex justify-center items-center h-screen">
-            <span className="loading loading-infinity loading-lg"></span>
-        </div>
-      );
-    }
+    // if (loading) {
+    //   return (
+    //     <div className="flex justify-center items-center h-screen">
+    //         <span className="loading loading-infinity loading-lg"></span>
+    //     </div>
+    //   );
+    // }
 
     return (
       <div className="min-h-screen bg-base-200 py-12 px-6">

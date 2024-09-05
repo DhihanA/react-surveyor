@@ -99,7 +99,7 @@ export default function Quest() {
 
     return (
       <div className="p-4 text-center">
-        {allQuests && allQuests.length >= 4 ? (
+        {allQuests && allQuests.length >= 10 ? (
           <div className="flex flex-col items-center justify-center h-screen">
             <div className="alert alert-info shadow-lg flex items-center justify-center text-center">
               <svg

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '@/firebase.js'; 
-import { collection, getDoc, getDocs, doc, updateDoc, arrayUnion, increment } from "firebase/firestore";
+import { collection, getDoc, getDocs, doc, updateDoc, deleteDoc, arrayUnion, increment } from "firebase/firestore";
 import SignInComponent from '@/components/SignInComponent'
 import NavbarComponent from "@/components/NavbarComponent";
 import { useRouter } from "next/router";
@@ -15,17 +15,32 @@ export default function Home() {
   const [selectedOptions, setSelectedOptions] = useState({});
   const router = useRouter();
 
-  // getting all the surveys and updating the state in this
+  // getting all the surveys and updating the state (and DB) in this
   useEffect(() => {
     const getAllSurveys = async () => {
       setQuestsLoading(true);
       const allSurveys = await getDocs(collection(db, "surveys")); // returns all the documents in the collection "surveys"
-      // console.log(allSurveys);
-      // allSurveys.forEach((doc) => {
-      //   console.log(`${doc.id} => ${doc.data()}`);
-      // });
-      setAllQuests(allSurveys.docs);
-      // console.log(allSurveys.docs)
+      const now = new Date();
+
+////////////////////////////////////////////////////////////////////////////////
+      // * DELETING EXPIRED SURVEYS FROM THE DB OVER HERE, IN THE CLIENT
+      const expiredSurveys = allSurveys.docs.filter((survey) => {
+        const expiresAt = survey.data().expiresAt.toDate();
+        return expiresAt < now;
+      });
+
+      expiredSurveys.forEach(async (survey) => {
+        await deleteDoc(doc(db, "surveys", survey.id)); // deleting the expired surveys
+        // console.log(`deleting da survey with ID: ${survey.id}`);
+      });
+////////////////////////////////////////////////////////////////////////////////
+    
+      const validSurveys = allSurveys.docs.filter((survey) => {
+        const expiresAt = survey.data().expiresAt.toDate();
+        return expiresAt >= now;  // only keeping da surveys that haven't expired
+      });
+      
+      setAllQuests(validSurveys);
       setQuestsLoading(false);
     }
     getAllSurveys();
