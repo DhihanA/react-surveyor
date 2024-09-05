@@ -35,16 +35,23 @@ export default function Home() {
       });
 ////////////////////////////////////////////////////////////////////////////////
     
-      const validSurveys = allSurveys.docs.filter((survey) => {
+      let validSurveys = allSurveys.docs.filter((survey) => {
         const expiresAt = survey.data().expiresAt.toDate();
         return expiresAt >= now;  // only keeping da surveys that haven't expired
+      });
+
+      // * sorting by quests that the user has not finished first, as they have priority over completed quests
+      validSurveys = validSurveys.sort((a, b) => {
+        const aResponse = a.data().responders.includes(user?.uid)
+        const bResponse = b.data().responders.includes(user?.uid)
+        return aResponse - bResponse;
       });
       
       setAllQuests(validSurveys);
       setQuestsLoading(false);
     }
     getAllSurveys();
-  }, []);
+  }, [user?.uid]);
 
   // honestly wish i knew what was happening here
   const handleOptionChange = (questId, optIndex) => {
