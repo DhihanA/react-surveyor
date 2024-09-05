@@ -15,6 +15,7 @@ export default function Quest() {
     const [options, setOptions] = useState(['', '', '', '']);
     const [allQuests, setAllQuests] = useState(null);
     const [questsLoading, setQuestsLoading] = useState(true);
+    const [questCreated, setQuestCreated] = useState(false);
     const router = useRouter();
 
     // protects this route from non-authenticated users
@@ -88,6 +89,8 @@ export default function Quest() {
         
         setQuestion('');
         setOptions(['', '', '', '']);
+
+        setQuestCreated(true);
     };
   
     if (questsLoading) {
@@ -102,6 +105,27 @@ export default function Quest() {
       <>
       <NavbarComponent />
       <div className="p-4 text-center">
+        {questCreated && (
+          <div className="alert alert-success shadow-lg mt-4 relative">
+            <div className='flex items-center'>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 shrink-0 stroke-current"
+                fill="none"
+                viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="ml-3 font-semibold">Quest successfully created!</span>
+            </div>
+            <button
+              className="absolute top-2 right-2 btn btn-sm btn-circle"
+              onClick={() => setQuestCreated(false)} // get rid of the notif if they want
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
         {allQuests && allQuests.length >= 10 ? (
           <div className="flex flex-col items-center justify-center h-screen">
             <div className="alert alert-info shadow-lg flex items-center justify-center text-center">
