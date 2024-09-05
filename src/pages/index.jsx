@@ -3,6 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '@/firebase.js'; 
 import { collection, getDoc, getDocs, doc, updateDoc, arrayUnion, increment } from "firebase/firestore";
 import SignInComponent from '@/components/SignInComponent'
+import NavbarComponent from "@/components/NavbarComponent";
 import { useRouter } from "next/router";
 // import { useRouter } from "next/router";
 
@@ -115,9 +116,10 @@ export default function Home() {
   return (
     <>
       <div className="p-4 text-center">
+        {/* <NavbarComponent /> */}
         {user ? (
-        // can show the users the actual dashboard
-        <div>
+          // can show the users the actual dashboard
+          <div>
           <h1 className="mb-5 text-4xl font-bold">Welcome, {user.displayName}!</h1>
           
           {/* have this here temporarily */}
