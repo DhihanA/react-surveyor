@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from '@/firebase.js'; 
 import SignOutComponent from '@/components/SignOutComponent';
@@ -81,7 +82,15 @@ export default function Navbar() {
                     </ul>
                 </div>
               )}
-              <Link href='/' className="btn btn-ghost text-xl">daisyUI TBD</Link>
+              <Link href='/' className="btn btn-ghost text-xl">
+                <Image
+                  src={'/icons8-quest-96.png'}
+                  width={32}
+                  height={32}
+                  alt="QuickQuest icon"
+                />
+                QuickQuest
+              </Link>
             </div>
 
 
