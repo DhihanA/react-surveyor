@@ -85,8 +85,8 @@ export default function Navbar() {
               <Link href='/' className="btn btn-ghost text-xl">
                 <Image
                   src={'/icons8-quest-96.png'}
-                  width={32}
-                  height={32}
+                  width={30}
+                  height={30}
                   alt="QuickQuest icon"
                 />
                 QuickQuest
