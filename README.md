@@ -1,4 +1,4 @@
-# QuickQuest
+# <img src='https://github.com/dhihana/react-surveyor/blob/main/public/icons8-quest-96.png?raw=true' width=25> QuickQuest
 
 Poll and acquire answers in **seconds**.
 
