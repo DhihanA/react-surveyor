@@ -1,40 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# QuickQuest
 
-## Getting Started
+Poll and acquire answers in **seconds**.
 
-First, run the development server:
+## Live Demo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Check out the live version here:
+<a href="https://quickquestproj.vercel.app/" target="_blank">**QuickQuest**</a>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Description
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+**QuickQuest** is a real-time survey platform where users can create quick, one-question polls and get instant feedback. The application displays up to 10 active "quests" at a time, and users can view the results immediately after submitting their responses.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Features
+- **Create Polls Instantly**: Easily create single-question polls.
+- **Real-time Results**: Watch the responses come in live after you submit.
+- **Limited-time Polls**: Polls last for a limited time before expiring.
+- **User Authentication**: Sign in with Google to create and respond to polls.
+- **Simple & Intuitive UI**: Designed for ease of use for everyone.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Frontend**: Next.js + React, DaisyUI + Tailwind CSS
+- **Backend**: Node.js, Firebase + Firebase Authentication, Next.js API Routes
+- **Database**: Firestore (NoSQL)
+- **Hosting & Deployment**: Vercel
 
-## Learn More
+## How It Works
 
-To learn more about Next.js, take a look at the following resources:
+- When signed in, you can create new polls or respond to existing ones.
+- Each poll is available for a limited time **(1 hour)** and will automatically expire.
+- The homepage shows all active polls, and after submitting your response, you can instantly see how others have responded.
+- You can only respond to each poll once.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Simply go to <a href="https://quickquestproj.vercel.app/" target="_blank">**QuickQuest**</a>, sign in with your Google account, and start creating or responding to polls. No setup or installation required!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Enjoy!
